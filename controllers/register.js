@@ -36,7 +36,7 @@ const handleRegister = (req, res, db, bcrypt) => {
         .then(trx.commit)
         .catch(trx.rollback)
     })
-    .catch(err => res.status(404).json('Try another Email adress'))
+    .catch(err => res.status(404).json('Unable To Register'))
     // this line of code means db('users'), insert({...})
     // and return (returning('*')) all the the columns
     // .catch(err => res.status(404).json(err)) OR do
