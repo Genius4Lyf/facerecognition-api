@@ -15,12 +15,13 @@ const image = require('./controllers/imageSubmit')
 const db = knex({
     client: 'pg',
     connection: {
-      connectionString : process.env.DATABASE_URL,
-      host : process.env.DATABASE_HOST,
+      connectionString : 'postgres://smartbraindb_funx_user:JYekBfYYU50dT3HsvWcjXaYOO8PLRCaZ@dpg-chfdlkbhp8u065uirf8g-a.oregon-postgres.render.com/smartbraindb_funx',
+      ssl: {rejectUnauthorized: false},
+      host : 'dpg-chfdlkbhp8u065uirf8g-a',
       port : 5432,
-      user : process.env.DATABASE_USER,
-      password : process.env.DATABASE_PW,
-      database : process.env.DATABASE_DB
+      user : 'smartbraindb_funx_user',
+      password : 'JYekBfYYU50dT3HsvWcjXaYOO8PLRCaZ',
+      database : 'smartbraindb_funx'
     }
   }); /*use to connect the database to the server*/
       /*knex helps to build our SQL statement for us*/

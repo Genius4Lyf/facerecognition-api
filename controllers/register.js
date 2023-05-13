@@ -2,10 +2,10 @@ const handleRegister = (req, res, db, bcrypt) => {
     // when a website/app sends a request with the '/register' url
     // the lines of code gets run and then a response is sent back to the website/app
     const {name, email, password} = req.body;
+    console.log(name, email, password)
     if (!email || !password || !name) {
        return res.status(400).json('Incorrect Form Submition');
     }
-    const hash = bcrypt.hashSync(password);
     // you create a transaction when you have to do more than two things at once and
     // the trx obj instead of the db to do the database operations
     // in this case, we inserted (trx.insert({})) to login, it then returns the email (returning('email'))
@@ -15,6 +15,7 @@ const handleRegister = (req, res, db, bcrypt) => {
     // commit(.then(trx.commit))
     // and incase anything fails, we...
     // rollback the changes (.catch(trx.rollback))
+    const hash = bcrypt.hashSync(password);
     db.transaction(trx => {
         trx.insert({
             hash: hash,
@@ -36,7 +37,10 @@ const handleRegister = (req, res, db, bcrypt) => {
         .then(trx.commit)
         .catch(trx.rollback)
     })
-    .catch(err => res.status(404).json('Unable To Register'))
+    .catch(err => {
+        res.status(404).json(err)
+        console.log(err)
+    })
     // this line of code means db('users'), insert({...})
     // and return (returning('*')) all the the columns
     // .catch(err => res.status(404).json(err)) OR do
