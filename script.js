@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt-nodejs'); /*use to encrypt passwords in hash form
 const cors = require('cors'); /*use to make http request to a server and allows for the client to send back a response */
 const knex = require('knex'); /*use to connect the database to the server*/
 
+
+
 // DEPENDENCY INJECTION
 const register = require('./controllers/register');
 const signIn = require('./controllers/signin');
@@ -13,11 +15,12 @@ const image = require('./controllers/imageSubmit')
 const db = knex({
     client: 'pg',
     connection: {
-      host : '127.0.0.1',
+      connectionString : process.env.DATABASE_URL,
+      host : process.env.DATABASE_HOST,
       port : 5432,
-      user : 'postgres',
-      password : 'test',
-      database : 'smartbrain'
+      user : process.env.DATABASE_USER,
+      password : process.env.DATABASE_PW,
+      database : process.env.DATABASE_DB
     }
   }); /*use to connect the database to the server*/
       /*knex helps to build our SQL statement for us*/
@@ -51,6 +54,9 @@ app.get('/user/:id', (req, res) => {user.handleUserGet(req, res)});
 app.put('/image', (req, res) => {image.handleImageSubmit(req, res, db)})
 app.post('/imageurl', (req, res) => {image.handleApiCall(req, res)})
 
+
+
+console.log(process.env)
 
 
 app.listen(3001, () =>{
