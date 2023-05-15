@@ -9,8 +9,8 @@ const knex = require('knex'); /*use to connect the database to the server*/
 // DEPENDENCY INJECTION
 const register = require('./controllers/register');
 const signIn = require('./controllers/signin');
-const user = require('./controllers/user')
-const image = require('./controllers/imageSubmit')
+const user = require('./controllers/user');
+const image = require('./controllers/imageSubmit');
 
 const db = knex({
     client: 'pg',
@@ -55,13 +55,8 @@ app.get('/user/:id', (req, res) => {user.handleUserGet(req, res)});
 app.put('/image', (req, res) => {image.handleImageSubmit(req, res, db)})
 app.post('/imageurl', (req, res) => {image.handleApiCall(req, res)})
 
-
-
-console.log(process.env)
-
-
-app.listen(3001, () =>{
-    console.log('App is running on port 3001')
+app.listen(process.env.PORT, () =>{
+    console.log(`App is running on port ${process.env.PORT}` )
 })
 
 // NOTE TO SELF
