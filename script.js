@@ -3,7 +3,7 @@ const express = require('express'); /*use for making clean backend request betwe
 const bcrypt = require('bcrypt-nodejs'); /*use to encrypt passwords in hash format so it is not easily hacked by attackers on the web */
 const cors = require('cors'); /*use to make http request to a server and allows for the client to send back a response */
 const knex = require('knex'); /*use to connect the database to the server*/
-
+const knexConfig = require('./knexfile');
 
 
 // DEPENDENCY INJECTION
@@ -12,18 +12,32 @@ const signIn = require('./controllers/signin');
 const user = require('./controllers/user');
 const image = require('./controllers/imageSubmit');
 
-const db = knex({
-    client: 'pg',
-    connection: {
-      connectionString : 'postgres://smartbraindb_funx_user:JYekBfYYU50dT3HsvWcjXaYOO8PLRCaZ@dpg-chfdlkbhp8u065uirf8g-a.oregon-postgres.render.com/smartbraindb_funx',
-      ssl: {rejectUnauthorized: false},
-      host : 'dpg-chfdlkbhp8u065uirf8g-a',
-      port : 5432,
-      user : 'smartbraindb_funx_user',
-      password : 'JYekBfYYU50dT3HsvWcjXaYOO8PLRCaZ',
-      database : 'smartbraindb_funx'
-    }
-  }); /*use to connect the database to the server*/
+const db = knex(knexConfig[process.env.NODE_ENV || 'production']);
+// const db = knex({
+//   client: 'pg',
+//   connection: {
+//     host : '127.0.0.1',
+//     port : 5432,
+//     user : 'postgres',
+//     password : 'test',
+//     database : 'smartbrain'
+//   }
+// });
+
+
+// const db = knex({
+//host : 'dpg-chfdlkbhp8u065uirf8g-a',
+//       port : 5432,
+//       user : 'smartbraindb_funx_user',
+//       password : 'JYekBfYYU50dT3HsvWcjXaYOO8PLRCaZ',
+//       database : 'smartbraindb_funx'     client: 'pg',
+//     connection: {
+//       connectionString : 'postgres://smartbraindb_funx_user:JYekBfYYU50dT3HsvWcjXaYOO8PLRCaZ@dpg-chfdlkbhp8u065uirf8g-a.oregon-postgres.render.com/smartbraindb_funx',
+//       ssl: {rejectUnauthorized: false},
+//       
+//     }
+//   }); /*use to connect the database to the server*/
+
       /*knex helps to build our SQL statement for us*/
       /*ex: db.select('*').from('users') --> this is used as well in postgreSQL to select everything from users table and display */ 
 
@@ -55,8 +69,8 @@ app.get('/user/:id', (req, res) => {user.handleUserGet(req, res)});
 app.put('/image', (req, res) => {image.handleImageSubmit(req, res, db)})
 app.post('/imageurl', (req, res) => {image.handleApiCall(req, res)})
 
-app.listen(process.env.PORT, () =>{
-    console.log(`App is running on port ${process.env.PORT}` )
+app.listen(3001, () =>{
+    console.log(`App is running on port 3001` )
 })
 
 // NOTE TO SELF
