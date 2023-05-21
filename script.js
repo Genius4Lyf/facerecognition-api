@@ -69,8 +69,8 @@ app.get('/user/:id', (req, res) => {user.handleUserGet(req, res)});
 app.put('/image', (req, res) => {image.handleImageSubmit(req, res, db)})
 app.post('/imageurl', (req, res) => {image.handleApiCall(req, res)})
 
-app.listen(3001, () =>{
-    console.log(`App is running on port 3001` )
+app.listen(process.env.PORT, () =>{
+    console.log(`App is running on port ${process.env.PORT}` )
 })
 
 // NOTE TO SELF
